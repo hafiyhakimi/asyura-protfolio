@@ -606,14 +606,16 @@ function esc(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── BUILD ──────────────────────────────────────────────────
+// ── BUILD / SAVE ────────────────────────────────────────────
 async function buildPortfolio() {
   const btn = document.getElementById('build-btn');
   btn.disabled = true;
-  setStatus('Saving your portfolio…');
+
+  const isEdit = !!window._editMode;
+  setStatus(isEdit ? 'Saving changes…' : 'Saving your portfolio…');
   setLoading(20);
 
-  profileData = {
+  const newData = {
     name: val('f-name'), title: val('f-title'), location: val('f-location'),
     bio: val('f-bio'), about: val('f-about'), skills: val('f-skills'),
     linkedin: val('f-linkedin'), github: val('f-github'), email: val('f-email'),
@@ -621,11 +623,12 @@ async function buildPortfolio() {
     exploc: val('f-exploc'), expdesc: val('f-expdesc'),
     degree: val('f-degree'), school: val('f-school'),
     eduyears: val('f-eduyears'), edumeta: val('f-edumeta'),
-    resume_url: ''
+    resume_url: isEdit ? (profileData.resume_url || '') : ''
   };
 
-  portfolioId = genId();
-  const pwHash = await hashPassword(savedPassword);
+  if (!isEdit) {
+    portfolioId = genId();
+  }
 
   // Upload resume if provided
   if (resumeFile) {
@@ -639,39 +642,62 @@ async function buildPortfolio() {
         body: resumeFile
       });
       if (uploadRes.ok) {
-        profileData.resume_url = `${SUPABASE_URL}/storage/v1/object/public/resumes/${path}`;
+        newData.resume_url = `${SUPABASE_URL}/storage/v1/object/public/resumes/${path}`;
       }
     } catch(e) { console.warn('Resume upload failed:', e); }
   }
 
   setLoading(70);
-  setStatus('Saving to database…');
+  setStatus(isEdit ? 'Updating…' : 'Saving to database…');
 
-  // Save to Supabase
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios`, {
-      method: 'POST',
-      headers: { ...HEADERS, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ id: portfolioId, password_hash: pwHash, data: profileData, resume_url: profileData.resume_url })
-    });
-    if (!res.ok) throw new Error(await res.text());
+    if (isEdit) {
+      // PATCH existing row
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios?id=eq.${portfolioId}`, {
+        method: 'PATCH',
+        headers: { ...HEADERS, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ data: newData, resume_url: newData.resume_url, updated_at: new Date().toISOString() })
+      });
+      if (!res.ok) throw new Error(await res.text());
+    } else {
+      // POST new row
+      const pwHash = await hashPassword(savedPassword);
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios`, {
+        method: 'POST',
+        headers: { ...HEADERS, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ id: portfolioId, password_hash: pwHash, data: newData, resume_url: newData.resume_url })
+      });
+      if (!res.ok) throw new Error(await res.text());
+    }
   } catch(e) {
-    setStatus('Something went wrong. Please try again.');
+    setStatus('Something went wrong: ' + e.message);
     setLoading(0);
     btn.disabled = false;
     console.error(e);
     return;
   }
 
+  profileData = newData;
   setLoading(100);
   setStatus('');
+  btn.disabled = false;
 
-  // Show share screen
-  const url = `${location.origin}${location.pathname}?p=${portfolioId}`;
-  document.getElementById('share-url').textContent = url;
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('share-screen').style.display = 'flex';
-  window.scrollTo({ top: 0 });
+  if (isEdit) {
+    window._editMode = false;
+    btn.textContent = 'Build portfolio →';
+    renderPortfolio(profileData);
+    document.getElementById('setup-screen').style.display = 'none';
+    document.getElementById('portfolio-screen').style.display = 'block';
+    initFades();
+    window.scrollTo({ top: 0 });
+  } else {
+    // Show share screen
+    const url = `${location.origin}${location.pathname}?p=${portfolioId}`;
+    document.getElementById('share-url').textContent = url;
+    document.getElementById('setup-screen').style.display = 'none';
+    document.getElementById('share-screen').style.display = 'flex';
+    window.scrollTo({ top: 0 });
+  }
 }
 
 // ── RENDER ─────────────────────────────────────────────────
