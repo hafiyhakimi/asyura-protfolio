@@ -7,431 +7,257 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-/* ── THEME TOKENS ───────────────────────────────────────── */
-[data-theme="dark"] {
-  --bg:              #0a0a0a;
-  --bg1:             #111111;
-  --bg2:             #161616;
-  --border:          #1e1e1e;
-  --bord2:           #2a2a2a;
-  --dim:             #484848;
-  --muted:           #818181;
-  --text:            #b8b8b8;
-  --bright:          #efefef;
-  --teal:            #4fd1c5;
-  --nav-bg:          rgba(10,10,10,0.93);
-  --setup-bg:        #0d0d0d;
-  --setup-card-bg:   #111111;
-  --setup-card-bord: #1e1e1e;
-  --input-bg:        #0a0a0a;
-  --input-bord:      #2a2a2a;
-  --pill-bg:         #efefef;
-  --pill-color:      #0a0a0a;
-}
-[data-theme="light"] {
-  --bg:              #f9f9f7;
-  --bg1:             #f0f0ee;
-  --bg2:             #e8e8e6;
-  --border:          #e0e0dc;
-  --bord2:           #d0d0cc;
-  --dim:             #aaaaaa;
-  --muted:           #666666;
-  --text:            #444444;
-  --bright:          #111111;
-  --teal:            #0e9488;
-  --nav-bg:          rgba(249,249,247,0.93);
-  --setup-bg:        #f0f0ee;
-  --setup-card-bg:   #ffffff;
-  --setup-card-bord: #e0e0dc;
-  --input-bg:        #f9f9f7;
-  --input-bord:      #d0d0cc;
-  --pill-bg:         #111111;
-  --pill-color:      #f9f9f7;
-}
-
-/* ── RESET ──────────────────────────────────────────────── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;transition:background-color .25s ease,border-color .25s ease,color .25s ease}
+[data-theme="dark"]{--bg:#0a0a0a;--bg1:#111111;--border:#1e1e1e;--bord2:#2a2a2a;--dim:#484848;--muted:#818181;--text:#b8b8b8;--bright:#efefef;--teal:#4fd1c5;--nav-bg:rgba(10,10,10,0.93);--setup-bg:#0d0d0d;--card-bg:#111111;--card-bord:#1e1e1e;--input-bg:#0a0a0a;--input-bord:#2a2a2a;--pill-bg:#efefef;--pill-color:#0a0a0a}
+[data-theme="light"]{--bg:#f9f9f7;--bg1:#f0f0ee;--border:#e0e0dc;--bord2:#d0d0cc;--dim:#aaaaaa;--muted:#666666;--text:#444444;--bright:#111111;--teal:#0e9488;--nav-bg:rgba(249,249,247,0.93);--setup-bg:#f0f0ee;--card-bg:#ffffff;--card-bord:#e0e0dc;--input-bg:#f9f9f7;--input-bord:#d0d0cc;--pill-bg:#111111;--pill-color:#f9f9f7}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;transition:background-color .25s,border-color .25s,color .25s}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased}
 
-/* ── SETUP SCREEN ───────────────────────────────────────── */
+/* SETUP */
 #setup-screen{min-height:100vh;background:var(--setup-bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem}
-.setup-header{display:flex;justify-content:flex-end;width:100%;max-width:520px;margin-bottom:1rem}
-.setup-card{background:var(--setup-card-bg);border:1px solid var(--setup-card-bord);border-radius:4px;padding:2.5rem 2.25rem;max-width:520px;width:100%}
-.setup-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1rem}
-.setup-title{font-size:1.5rem;font-weight:500;color:var(--bright);letter-spacing:-.02em;margin-bottom:.4rem}
-.setup-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;line-height:1.75}
-.step-dots{display:flex;gap:5px;margin-bottom:2rem}
-.step-dot{height:2px;flex:1;background:var(--border);border-radius:2px;transition:background .3s ease}
-.step-dot.active{background:var(--muted)}
-.step-dot.done{background:var(--teal)}
-
-/* forms */
-.form-group{margin-bottom:1.1rem}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.setup-hdr{display:flex;justify-content:flex-end;width:100%;max-width:520px;margin-bottom:1rem}
+.card{background:var(--card-bg);border:1px solid var(--card-bord);border-radius:4px;padding:2.5rem 2.25rem;max-width:520px;width:100%}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;margin-bottom:1rem}
+.card-title{font-size:1.5rem;font-weight:500;color:var(--bright);letter-spacing:-.02em;margin-bottom:.4rem}
+.card-sub{font-size:.85rem;color:var(--muted);margin-bottom:2rem;line-height:1.75}
+.dots{display:flex;gap:5px;margin-bottom:2rem}
+.dot{height:2px;flex:1;background:var(--border);border-radius:2px;transition:background .3s}
+.dot.active{background:var(--muted)}.dot.done{background:var(--teal)}
+.fg{margin-bottom:1.1rem}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
 label{display:block;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem}
-input[type="text"],input[type="email"],input[type="password"],input[type="url"],textarea{width:100%;padding:.6rem .85rem;background:var(--input-bg);border:1px solid var(--input-bord);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--bright);outline:none;resize:vertical;appearance:none}
+input[type=text],input[type=email],input[type=password],input[type=url],textarea{width:100%;padding:.6rem .85rem;background:var(--input-bg);border:1px solid var(--input-bord);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--bright);outline:none;resize:vertical}
 input::placeholder,textarea::placeholder{color:var(--dim)}
 input:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(79,209,197,.08)}
-[data-theme="light"] input:focus,[data-theme="light"] textarea:focus{box-shadow:0 0 0 2px rgba(14,148,136,.08)}
+[data-theme=light] input:focus,[data-theme=light] textarea:focus{box-shadow:0 0 0 2px rgba(14,148,136,.08)}
 .hint{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--dim);margin-top:.35rem;letter-spacing:.04em}
-.error-msg{font-size:.75rem;color:#f87171;margin-top:.35rem;display:none}
-.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:.75rem}
+.err{font-size:.75rem;color:#f87171;margin-top:.35rem;display:none}
+.snav{display:flex;justify-content:space-between;align-items:center;margin-top:1.75rem;gap:.75rem}
+.bbk{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;padding:.55rem 1.1rem;border:1px solid var(--bord2);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer}
+.bbk:hover{border-color:var(--muted);color:var(--bright)}
+.bnx{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;padding:.55rem 1.4rem;border:1px solid var(--teal);border-radius:2px;background:var(--teal);color:#0a0a0a;font-weight:500;cursor:pointer}
+.bnx:hover{background:transparent;color:var(--teal)}
+.bnx:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+.lbar{height:2px;background:var(--teal);width:0;transition:width .3s;border-radius:2px;display:none;margin-bottom:1rem}
+.smsg{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);text-align:center;margin-top:1rem;min-height:1.2rem;letter-spacing:.04em}
+.ttog{background:none;border:1px solid var(--bord2);border-radius:2px;padding:.35rem .7rem;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.4rem}
+.ttog:hover{border-color:var(--muted);color:var(--bright)}
 
-/* file upload */
-.file-drop{border:1px dashed var(--bord2);border-radius:2px;padding:1.2rem;text-align:center;cursor:pointer;transition:border-color .2s}
-.file-drop:hover,.file-drop.dragover{border-color:var(--teal)}
-.file-drop-label{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.06em}
-.file-drop-sub{font-size:.75rem;color:var(--dim);margin-top:.3rem}
-.file-chosen{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--teal);margin-top:.5rem;display:none}
-#resume-input{display:none}
+/* FILE DROP */
+.fdrop{border:1px dashed var(--bord2);border-radius:2px;padding:1.2rem;text-align:center;cursor:pointer}
+.fdrop:hover,.fdrop.over{border-color:var(--teal)}
+.fdrop-lbl{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.06em}
+.fdrop-sub{font-size:.75rem;color:var(--dim);margin-top:.3rem}
+.fchosen{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--teal);margin-top:.5rem;display:none}
 
-/* buttons */
-.btn-back{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;padding:.55rem 1.1rem;border:1px solid var(--bord2);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer}
-.btn-back:hover{border-color:var(--muted);color:var(--bright)}
-.btn-next{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;padding:.55rem 1.4rem;border:1px solid var(--teal);border-radius:2px;background:var(--teal);color:#0a0a0a;font-weight:500;cursor:pointer}
-.btn-next:hover{background:transparent;color:var(--teal)}
-.btn-next:disabled{opacity:.4;cursor:not-allowed}
-
-/* loading state */
-.loading-bar{height:2px;background:var(--teal);width:0;transition:width .3s ease;margin-bottom:1rem;border-radius:2px;display:none}
-.status-msg{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);text-align:center;margin-top:1rem;min-height:1.2rem;letter-spacing:.04em}
-
-/* theme toggle */
-.theme-toggle{background:none;border:1px solid var(--bord2);border-radius:2px;padding:.35rem .7rem;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.4rem}
-.theme-toggle:hover{border-color:var(--muted);color:var(--bright)}
-
-/* share screen */
+/* SHARE */
 #share-screen{min-height:100vh;background:var(--setup-bg);display:none;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem}
-.share-card{background:var(--setup-card-bg);border:1px solid var(--setup-card-bord);border-radius:4px;padding:2.5rem 2.25rem;max-width:520px;width:100%;text-align:center}
+.share-card{background:var(--card-bg);border:1px solid var(--card-bord);border-radius:4px;padding:2.5rem 2.25rem;max-width:520px;width:100%;text-align:center}
 .share-icon{font-size:2rem;margin-bottom:1rem}
 .share-title{font-size:1.3rem;font-weight:500;color:var(--bright);margin-bottom:.5rem}
 .share-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.75}
-.share-link-box{display:flex;gap:.5rem;align-items:center;background:var(--input-bg);border:1px solid var(--bord2);border-radius:2px;padding:.5rem .75rem;margin-bottom:1.5rem;text-align:left}
-.share-link-url{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--teal);flex:1;word-break:break-all;letter-spacing:.02em}
-.copy-btn{font-family:'IBM Plex Mono',monospace;font-size:.62rem;padding:.3rem .7rem;border:1px solid var(--bord2);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0}
-.copy-btn:hover{border-color:var(--teal);color:var(--teal)}
-.share-note{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);line-height:1.7;letter-spacing:.03em}
+.slbox{display:flex;gap:.5rem;align-items:center;background:var(--input-bg);border:1px solid var(--bord2);border-radius:2px;padding:.5rem .75rem;margin-bottom:1.5rem;text-align:left}
+.slurl{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--teal);flex:1;word-break:break-all;letter-spacing:.02em}
+.cpybtn{font-family:'IBM Plex Mono',monospace;font-size:.62rem;padding:.3rem .7rem;border:1px solid var(--bord2);border-radius:2px;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.cpybtn:hover{border-color:var(--teal);color:var(--teal)}
+.snote{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);line-height:1.7;letter-spacing:.03em}
 
-/* ── PORTFOLIO SCREEN ───────────────────────────────────── */
+/* PORTFOLIO */
 #portfolio-screen{display:none}
-nav{position:sticky;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-left{display:flex;align-items:center;gap:1.6rem}
-.nav-name{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-decoration:none}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nleft{display:flex;align-items:center;gap:1.6rem}
+.nname{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.06em;text-decoration:none}
 nav ul{display:flex;gap:2.8rem;list-style:none}
 nav a{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--dim);text-decoration:none;letter-spacing:.12em;text-transform:uppercase}
 nav a:hover{color:var(--bright)}
-.nav-edit{font-family:'IBM Plex Mono',monospace;font-size:.62rem;padding:.35rem .7rem;border:1px solid var(--bord2);border-radius:2px;color:var(--dim);background:none;cursor:pointer;letter-spacing:.08em;text-transform:uppercase}
-.nav-edit:hover{border-color:var(--muted);color:var(--bright)}
-
+.nedit{font-family:'IBM Plex Mono',monospace;font-size:.62rem;padding:.35rem .7rem;border:1px solid var(--bord2);border-radius:2px;color:var(--dim);background:none;cursor:pointer;letter-spacing:.08em;text-transform:uppercase}
+.nedit:hover{border-color:var(--muted);color:var(--bright)}
 #hero{min-height:100vh;display:flex;align-items:center;max-width:860px;margin:0 auto;padding:0 4rem}
-.hero-eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;margin-bottom:2.2rem}
-.hero-name{font-size:clamp(2.6rem,5vw,3.8rem);font-weight:500;color:var(--bright);letter-spacing:-.03em;line-height:1.06;margin-bottom:1.8rem}
-.hero-desc{font-size:.95rem;color:var(--muted);max-width:500px;line-height:1.85;margin-bottom:2.8rem}
-.hero-links{display:flex;gap:.7rem;flex-wrap:wrap}
+.heyebrow{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal);letter-spacing:.18em;text-transform:uppercase;margin-bottom:2.2rem}
+.hname{font-size:clamp(2.6rem,5vw,3.8rem);font-weight:500;color:var(--bright);letter-spacing:-.03em;line-height:1.06;margin-bottom:1.8rem}
+.hdesc{font-size:.95rem;color:var(--muted);max-width:500px;line-height:1.85;margin-bottom:2.8rem}
+.hlinks{display:flex;gap:.7rem;flex-wrap:wrap}
 .pill{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;padding:.55rem 1.1rem;border-radius:2px;text-decoration:none;cursor:pointer}
-.pill-solid{background:var(--pill-bg);color:var(--pill-color);border:1px solid var(--pill-bg);font-weight:500}
-.pill-solid:hover{background:transparent;color:var(--bright);border-color:var(--bright)}
-.pill-ghost{color:var(--muted);border:1px solid var(--bord2)}
-.pill-ghost:hover{color:var(--bright);border-color:var(--muted)}
-
+.ps{background:var(--pill-bg);color:var(--pill-color);border:1px solid var(--pill-bg);font-weight:500}
+.ps:hover{background:transparent;color:var(--bright);border-color:var(--bright)}
+.pg{color:var(--muted);border:1px solid var(--bord2)}
+.pg:hover{color:var(--bright);border-color:var(--muted)}
 .wrap{max-width:860px;margin:0 auto;padding:6.5rem 4rem;border-top:1px solid var(--border)}
-.sec-label{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.22em;text-transform:uppercase;margin-bottom:3.5rem;display:flex;align-items:center;gap:1.4rem}
-.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
-
-.about-text{font-size:.95rem;color:var(--muted);line-height:1.85;white-space:pre-line;margin-bottom:2rem}
-.skills-wrap{display:flex;flex-wrap:wrap;gap:.45rem}
-.sk-tag{font-family:'IBM Plex Mono',monospace;font-size:.66rem;padding:.32rem .75rem;border:1px solid var(--bord2);border-radius:2px;color:var(--text);letter-spacing:.03em}
-
-.exp-list{display:flex;flex-direction:column}
-.exp-item{display:grid;grid-template-columns:170px 1fr;gap:0 2.8rem;padding:2.8rem 0;border-bottom:1px solid var(--border)}
-.exp-item:first-child{padding-top:0}
-.exp-item:last-child{border-bottom:none;padding-bottom:0}
-.exp-period{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.06em;margin-bottom:.5rem;line-height:1.7}
-.exp-co{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal)}
-.exp-role{font-size:1rem;font-weight:500;color:var(--bright);margin-bottom:.75rem}
-.exp-desc{font-size:.845rem;color:var(--muted);line-height:1.8;white-space:pre-line}
-
-.edu-item{display:grid;grid-template-columns:170px 1fr;gap:0 2.8rem;padding:2.2rem 0;border-bottom:1px solid var(--border)}
-.edu-item:first-child{padding-top:0}
-.edu-item:last-child{border-bottom:none;padding-bottom:0}
-.edu-period{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);padding-top:.1rem;line-height:1.7}
-.edu-deg{font-size:.95rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
-.edu-school{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal);margin-bottom:.4rem}
-.edu-meta{font-size:.8rem;color:var(--muted);line-height:1.9}
-
-.award-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
-.aw{background:var(--bg);padding:1.8rem 2rem}
-.aw:hover{background:var(--bg1)}
-.aw-year{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.12em;margin-bottom:.5rem}
-.aw-title{font-size:.9rem;font-weight:500;color:var(--bright);margin-bottom:.35rem}
-.aw-body{font-size:.8rem;color:var(--muted);line-height:1.65}
-
+.slbl{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.22em;text-transform:uppercase;margin-bottom:3.5rem;display:flex;align-items:center;gap:1.4rem}
+.slbl::after{content:'';flex:1;height:1px;background:var(--border)}
+.atxt{font-size:.95rem;color:var(--muted);line-height:1.85;white-space:pre-line;margin-bottom:2rem}
+.sktags{display:flex;flex-wrap:wrap;gap:.45rem}
+.skt{font-family:'IBM Plex Mono',monospace;font-size:.66rem;padding:.32rem .75rem;border:1px solid var(--bord2);border-radius:2px;color:var(--text);letter-spacing:.03em}
+.explist{display:flex;flex-direction:column}
+.expitem{display:grid;grid-template-columns:170px 1fr;gap:0 2.8rem;padding:2.8rem 0;border-bottom:1px solid var(--border)}
+.expitem:first-child{padding-top:0}.expitem:last-child{border-bottom:none;padding-bottom:0}
+.epper{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);letter-spacing:.06em;margin-bottom:.5rem;line-height:1.7}
+.epco{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal)}
+.eprole{font-size:1rem;font-weight:500;color:var(--bright);margin-bottom:.75rem}
+.epdesc{font-size:.845rem;color:var(--muted);line-height:1.8;white-space:pre-line}
+.eduitem{display:grid;grid-template-columns:170px 1fr;gap:0 2.8rem;padding:2.2rem 0;border-bottom:1px solid var(--border)}
+.eduitem:first-child{padding-top:0}.eduitem:last-child{border-bottom:none;padding-bottom:0}
+.eduyrs{font-family:'IBM Plex Mono',monospace;font-size:.62rem;color:var(--dim);padding-top:.1rem;line-height:1.7}
+.edudeg{font-size:.95rem;font-weight:500;color:var(--bright);margin-bottom:.25rem}
+.edusch{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--teal);margin-bottom:.4rem}
+.edumeta{font-size:.8rem;color:var(--muted);line-height:1.9}
 #contact{border-top:1px solid var(--border)}
-.contact-inner{max-width:860px;margin:0 auto;padding:6rem 4rem}
-.contact-h{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:500;color:var(--bright);letter-spacing:-.025em;margin-bottom:.7rem}
-.contact-sub{font-size:.875rem;color:var(--muted);margin-bottom:2.4rem;max-width:420px}
-.contact-row{display:flex;gap:.7rem;flex-wrap:wrap}
-
+.cinner{max-width:860px;margin:0 auto;padding:6rem 4rem}
+.ch{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:500;color:var(--bright);letter-spacing:-.025em;margin-bottom:.7rem}
+.csub{font-size:.875rem;color:var(--muted);margin-bottom:2.4rem;max-width:420px}
+.crow{display:flex;gap:.7rem;flex-wrap:wrap}
 footer{border-top:1px solid var(--border);padding:1.4rem 4rem;display:flex;justify-content:space-between;align-items:center}
 footer span{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--dim);letter-spacing:.06em}
 
-/* modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;padding:1rem}
-.modal-overlay.open{display:flex}
-.modal-box{background:var(--bg1);border:1px solid var(--border);border-radius:4px;padding:2rem;max-width:360px;width:100%}
-.modal-title{font-size:1.1rem;font-weight:500;color:var(--bright);margin-bottom:.35rem}
-.modal-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.4rem}
-.modal-actions{display:flex;gap:.6rem;margin-top:1rem}
-.modal-actions .btn-next{flex:1}
+/* MODAL */
+.moverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center;padding:1rem}
+.moverlay.open{display:flex}
+.mbox{background:var(--bg1);border:1px solid var(--border);border-radius:4px;padding:2rem;max-width:360px;width:100%}
+.mtitle{font-size:1.1rem;font-weight:500;color:var(--bright);margin-bottom:.35rem}
+.msub{font-size:.82rem;color:var(--muted);margin-bottom:1.4rem}
+.mact{display:flex;gap:.6rem;margin-top:1rem}
+.mact .bnx{flex:1}
 
-/* fade */
 .fade{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 .fade.in{opacity:1;transform:none}
 .hidden{display:none!important}
-
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--bord2)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bord2)}
 
 @media(max-width:720px){
-  nav{padding:1rem 1.4rem}
-  nav ul{gap:1.3rem}
-  #hero{padding:0 1.4rem}
-  .wrap{padding:4.5rem 1.4rem}
-  .exp-item,.edu-item{grid-template-columns:1fr;gap:.3rem}
-  .award-grid{grid-template-columns:1fr}
-  .contact-inner{padding:4rem 1.4rem}
+  nav{padding:1rem 1.4rem}nav ul{gap:1.3rem}
+  #hero{padding:0 1.4rem}.wrap{padding:4.5rem 1.4rem}
+  .expitem,.eduitem{grid-template-columns:1fr;gap:.3rem}
+  .cinner{padding:4rem 1.4rem}
   footer{padding:1.4rem;flex-direction:column;gap:.4rem;text-align:center}
-  .form-row{grid-template-columns:1fr}
-  .setup-card{padding:2rem 1.5rem}
+  .fr{grid-template-columns:1fr}.card{padding:2rem 1.5rem}
 }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     SETUP SCREEN
-═══════════════════════════════════════════ -->
+<!-- SETUP -->
 <div id="setup-screen">
-  <div class="setup-header">
-    <button class="theme-toggle" id="themeToggleSetup">
-      <span id="setupThemeIcon">☀</span>
-      <span id="setupThemeLabel">Light</span>
+  <div class="setup-hdr">
+    <button class="ttog" id="tTogSetup">
+      <span id="tIconSetup">☀</span><span id="tLblSetup">Light</span>
     </button>
   </div>
-
-  <div class="setup-card">
-    <div class="setup-eyebrow">Portfolio Builder</div>
-    <h1 class="setup-title" id="setup-title">Let's build your portfolio</h1>
-    <p class="setup-sub" id="setup-sub">Fill in your details and your professional site will be ready in minutes.</p>
-
-    <div class="loading-bar" id="loading-bar"></div>
-    <div class="step-dots">
-      <div class="step-dot active" id="dot-0"></div>
-      <div class="step-dot" id="dot-1"></div>
-      <div class="step-dot" id="dot-2"></div>
-      <div class="step-dot" id="dot-3"></div>
-      <div class="step-dot" id="dot-4"></div>
+  <div class="card">
+    <div class="eyebrow">Portfolio Builder</div>
+    <h1 class="card-title" id="stitle">Let's build your portfolio</h1>
+    <p class="card-sub" id="ssub">Fill in your details and your professional site will be ready in minutes.</p>
+    <div class="lbar" id="lbar"></div>
+    <div class="dots">
+      <div class="dot active" id="d0"></div><div class="dot" id="d1"></div>
+      <div class="dot" id="d2"></div><div class="dot" id="d3"></div><div class="dot" id="d4"></div>
     </div>
 
-    <!-- Step 0: Password -->
-    <div id="step-0">
-      <div class="form-group">
+    <!-- Step 0 -->
+    <div id="s0">
+      <div class="fg">
         <label for="pw1">Create a password</label>
         <input type="password" id="pw1" placeholder="Choose a password" autocomplete="new-password"/>
         <p class="hint">You'll use this to edit your portfolio later.</p>
       </div>
-      <div class="form-group">
+      <div class="fg">
         <label for="pw2">Confirm password</label>
         <input type="password" id="pw2" placeholder="Repeat your password" autocomplete="new-password"/>
-        <p class="error-msg" id="pw-err">Passwords don't match.</p>
+        <p class="err" id="pwerr">Passwords don't match.</p>
       </div>
-      <div class="step-nav">
-        <span></span>
-        <button class="btn-next" onclick="nextStep(0)">Continue →</button>
-      </div>
+      <div class="snav"><span></span><button class="bnx" id="ns0">Continue →</button></div>
     </div>
 
-    <!-- Step 1: Basic Info -->
-    <div id="step-1" class="hidden">
-      <div class="form-group">
-        <label for="f-name">Full name</label>
-        <input type="text" id="f-name" placeholder="e.g. Ahmad Fariz bin Razali" autocomplete="name"/>
+    <!-- Step 1 -->
+    <div id="s1" class="hidden">
+      <div class="fg"><label for="fn">Full name</label><input type="text" id="fn" placeholder="e.g. Ahmad Fariz bin Razali" autocomplete="name"/></div>
+      <div class="fr">
+        <div class="fg"><label for="ft">Job title</label><input type="text" id="ft" placeholder="e.g. QA Engineer"/></div>
+        <div class="fg"><label for="fl">Location</label><input type="text" id="fl" placeholder="e.g. Kuala Lumpur"/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-title">Job title</label>
-          <input type="text" id="f-title" placeholder="e.g. QA Engineer"/>
-        </div>
-        <div class="form-group">
-          <label for="f-location">Location</label>
-          <input type="text" id="f-location" placeholder="e.g. Kuala Lumpur"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="f-bio">Short bio</label>
-        <textarea id="f-bio" rows="3" placeholder="2–3 sentences about who you are and what you do..."></textarea>
+      <div class="fg">
+        <label for="fb">Short bio</label>
+        <textarea id="fb" rows="3" placeholder="2–3 sentences about who you are and what you do..."></textarea>
         <p class="hint">This appears in your hero section — keep it punchy.</p>
       </div>
-      <div class="step-nav">
-        <button class="btn-back" onclick="prevStep(1)">← Back</button>
-        <button class="btn-next" onclick="nextStep(1)">Continue →</button>
-      </div>
+      <div class="snav"><button class="bbk" id="ps1">← Back</button><button class="bnx" id="ns1">Continue →</button></div>
     </div>
 
-    <!-- Step 2: About + Skills + Links -->
-    <div id="step-2" class="hidden">
-      <div class="form-group">
-        <label for="f-about">About me</label>
-        <textarea id="f-about" rows="4" placeholder="Your background, what drives you, what you bring to the table..."></textarea>
+    <!-- Step 2 -->
+    <div id="s2" class="hidden">
+      <div class="fg"><label for="fab">About me</label><textarea id="fab" rows="4" placeholder="Your background, what drives you, what you bring..."></textarea></div>
+      <div class="fg"><label for="fsk">Skills (comma-separated)</label><input type="text" id="fsk" placeholder="e.g. pytest, Postman, JIRA, Agile, Python"/></div>
+      <div class="fg"><label for="fli">LinkedIn URL</label><input type="url" id="fli" placeholder="https://linkedin.com/in/yourname"/></div>
+      <div class="fr">
+        <div class="fg"><label for="fgh">GitHub URL (optional)</label><input type="url" id="fgh" placeholder="https://github.com/username"/></div>
+        <div class="fg"><label for="fem">Email</label><input type="email" id="fem" placeholder="you@email.com" autocomplete="email"/></div>
       </div>
-      <div class="form-group">
-        <label for="f-skills">Skills (comma-separated)</label>
-        <input type="text" id="f-skills" placeholder="e.g. pytest, Postman, JIRA, Agile, Python"/>
-      </div>
-      <div class="form-group">
-        <label for="f-linkedin">LinkedIn URL</label>
-        <input type="url" id="f-linkedin" placeholder="https://linkedin.com/in/yourname"/>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-github">GitHub URL (optional)</label>
-          <input type="url" id="f-github" placeholder="https://github.com/username"/>
-        </div>
-        <div class="form-group">
-          <label for="f-email">Email</label>
-          <input type="email" id="f-email" placeholder="you@email.com" autocomplete="email"/>
-        </div>
-      </div>
-      <div class="step-nav">
-        <button class="btn-back" onclick="prevStep(2)">← Back</button>
-        <button class="btn-next" onclick="nextStep(2)">Continue →</button>
-      </div>
+      <div class="snav"><button class="bbk" id="ps2">← Back</button><button class="bnx" id="ns2">Continue →</button></div>
     </div>
 
-    <!-- Step 3: Experience -->
-    <div id="step-3" class="hidden">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-role">Job title</label>
-          <input type="text" id="f-role" placeholder="e.g. QA Engineer II"/>
-        </div>
-        <div class="form-group">
-          <label for="f-company">Company</label>
-          <input type="text" id="f-company" placeholder="e.g. PayNet"/>
-        </div>
+    <!-- Step 3 -->
+    <div id="s3" class="hidden">
+      <div class="fr">
+        <div class="fg"><label for="fro">Job title</label><input type="text" id="fro" placeholder="e.g. QA Engineer II"/></div>
+        <div class="fg"><label for="fco">Company</label><input type="text" id="fco" placeholder="e.g. PayNet"/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-dates">Period</label>
-          <input type="text" id="f-dates" placeholder="e.g. Feb 2025 – Present"/>
-        </div>
-        <div class="form-group">
-          <label for="f-exploc">Location</label>
-          <input type="text" id="f-exploc" placeholder="e.g. Kuala Lumpur"/>
-        </div>
+      <div class="fr">
+        <div class="fg"><label for="fda">Period</label><input type="text" id="fda" placeholder="e.g. Feb 2025 – Present"/></div>
+        <div class="fg"><label for="flo">Location</label><input type="text" id="flo" placeholder="e.g. Kuala Lumpur"/></div>
       </div>
-      <div class="form-group">
-        <label for="f-expdesc">What you did there</label>
-        <textarea id="f-expdesc" rows="4" placeholder="Describe your responsibilities and achievements..."></textarea>
-      </div>
-      <div class="step-nav">
-        <button class="btn-back" onclick="prevStep(3)">← Back</button>
-        <button class="btn-next" onclick="nextStep(3)">Continue →</button>
-      </div>
+      <div class="fg"><label for="fde">What you did there</label><textarea id="fde" rows="4" placeholder="Describe your responsibilities and achievements..."></textarea></div>
+      <div class="snav"><button class="bbk" id="ps3">← Back</button><button class="bnx" id="ns3">Continue →</button></div>
     </div>
 
-    <!-- Step 4: Education + Resume Upload -->
-    <div id="step-4" class="hidden">
-      <div class="form-group">
-        <label for="f-degree">Degree / Qualification</label>
-        <input type="text" id="f-degree" placeholder="e.g. Bachelor of Computer Science"/>
+    <!-- Step 4 -->
+    <div id="s4" class="hidden">
+      <div class="fg"><label for="fdg">Degree / Qualification</label><input type="text" id="fdg" placeholder="e.g. Bachelor of Computer Science"/></div>
+      <div class="fr">
+        <div class="fg"><label for="fsc">Institution</label><input type="text" id="fsc" placeholder="e.g. Universiti Teknologi Malaysia"/></div>
+        <div class="fg"><label for="fey">Years</label><input type="text" id="fey" placeholder="e.g. 2020 – 2024"/></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="f-school">Institution</label>
-          <input type="text" id="f-school" placeholder="e.g. Universiti Teknologi Malaysia"/>
-        </div>
-        <div class="form-group">
-          <label for="f-eduyears">Years</label>
-          <input type="text" id="f-eduyears" placeholder="e.g. 2020 – 2024"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="f-edumeta">Notes (optional)</label>
-        <input type="text" id="f-edumeta" placeholder="e.g. CGPA 3.81 · Dean's List"/>
-      </div>
-      <div class="form-group">
+      <div class="fg"><label for="fem2">Notes (optional)</label><input type="text" id="fem2" placeholder="e.g. CGPA 3.81 · Dean's List"/></div>
+      <div class="fg">
         <label>Resume / CV (optional — PDF only)</label>
-        <div class="file-drop" id="file-drop" onclick="document.getElementById('resume-input').click()">
-          <div class="file-drop-label">Click to upload or drag & drop</div>
-          <div class="file-drop-sub">PDF · Max 5MB</div>
+        <div class="fdrop" id="fdrop">
+          <div class="fdrop-lbl">Click to upload or drag &amp; drop</div>
+          <div class="fdrop-sub">PDF · Max 5MB</div>
         </div>
-        <input type="file" id="resume-input" accept=".pdf"/>
-        <div class="file-chosen" id="file-chosen">✓ <span id="file-name"></span></div>
+        <input type="file" id="fresume" accept=".pdf" style="display:none"/>
+        <div class="fchosen" id="fchosen">✓ <span id="fname"></span></div>
       </div>
-      <div class="step-nav">
-        <button class="btn-back" onclick="prevStep(4)">← Back</button>
-        <button class="btn-next" id="build-btn" onclick="buildPortfolio()">Build portfolio →</button>
-      </div>
-      <div class="status-msg" id="status-msg"></div>
+      <div class="snav"><button class="bbk" id="ps4">← Back</button><button class="bnx" id="buildbtn">Build portfolio →</button></div>
+      <p class="smsg" id="smsg"></p>
     </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SHARE SCREEN — shown after build
-═══════════════════════════════════════════ -->
+<!-- SHARE -->
 <div id="share-screen">
   <div class="share-card">
     <div class="share-icon">✦</div>
     <div class="share-title">Your portfolio is live!</div>
     <p class="share-sub">Share this link with anyone — it's your permanent portfolio URL. Save it somewhere safe.</p>
-    <div class="share-link-box">
-      <span class="share-link-url" id="share-url"></span>
-      <button class="copy-btn" onclick="copyLink()">Copy</button>
-    </div>
-    <p class="share-note">
-      To edit your portfolio later, visit your link and click "Edit" — you'll need your password.<br><br>
-      ⚠ Keep this link safe. Anyone with it can view your portfolio.
-    </p>
-    <div style="margin-top:1.5rem">
-      <button class="btn-next" style="width:100%" onclick="viewPortfolio()">View my portfolio →</button>
-    </div>
+    <div class="slbox"><span class="slurl" id="shareurl"></span><button class="cpybtn" id="cpybtn">Copy</button></div>
+    <p class="snote">To edit later, visit your link and click "Edit" — you'll need your password.<br><br>⚠ Keep this link safe. Anyone with it can view your portfolio.</p>
+    <div style="margin-top:1.5rem"><button class="bnx" style="width:100%" id="viewbtn">View my portfolio →</button></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     PORTFOLIO SCREEN
-═══════════════════════════════════════════ -->
+<!-- PORTFOLIO -->
 <div id="portfolio-screen">
-
-  <!-- Edit modal -->
-  <div class="modal-overlay" id="pw-modal">
-    <div class="modal-box">
-      <div class="modal-title">Edit portfolio</div>
-      <p class="modal-sub">Enter your password to update your details.</p>
-      <div class="form-group">
-        <label for="edit-pw">Password</label>
-        <input type="password" id="edit-pw" placeholder="Your password" autocomplete="current-password"/>
-        <p class="error-msg" id="pw-modal-err">Incorrect password.</p>
-      </div>
-      <div class="modal-actions">
-        <button class="btn-back" onclick="closeModal()">Cancel</button>
-        <button class="btn-next" onclick="checkPassword()">Enter →</button>
-      </div>
+  <div class="moverlay" id="pwmodal">
+    <div class="mbox">
+      <div class="mtitle">Edit portfolio</div>
+      <p class="msub">Enter your password to update your details.</p>
+      <div class="fg"><label for="editpw">Password</label><input type="password" id="editpw" placeholder="Your password" autocomplete="current-password"/><p class="err" id="pmerr">Incorrect password.</p></div>
+      <div class="mact"><button class="bbk" id="cancelModal">Cancel</button><button class="bnx" id="confirmModal">Enter →</button></div>
     </div>
   </div>
 
   <nav>
-    <div class="nav-left">
-      <a class="nav-name" href="#hero" id="nav-name">portfolio</a>
-      <button class="theme-toggle" id="themeTogglePortfolio">
-        <span id="portfolioThemeIcon">☀</span>
-        <span id="portfolioThemeLabel">Light</span>
-      </button>
+    <div class="nleft">
+      <a class="nname" href="#hero" id="pnav">portfolio</a>
+      <button class="ttog" id="tTogPortfolio"><span id="tIconPort">☀</span><span id="tLblPort">Light</span></button>
     </div>
     <ul>
       <li><a href="#about">About</a></li>
@@ -439,495 +265,338 @@ footer span{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--di
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="nav-edit" onclick="openModal()">Edit</button>
+    <button class="nedit" id="editbtn">Edit</button>
   </nav>
 
   <section id="hero">
     <div>
-      <div class="hero-eyebrow fade" id="p-eyebrow">Role · Location</div>
-      <h1 class="hero-name fade" id="p-name">Your Name</h1>
-      <p class="hero-desc fade" id="p-bio"></p>
-      <div class="hero-links fade" id="p-hero-links"></div>
+      <div class="heyebrow fade" id="peyebrow"></div>
+      <h1 class="hname fade" id="pname"></h1>
+      <p class="hdesc fade" id="pbio"></p>
+      <div class="hlinks fade" id="phlinks"></div>
     </div>
   </section>
 
   <section id="about">
     <div class="wrap">
-      <div class="sec-label fade">About</div>
-      <p class="about-text fade" id="p-about"></p>
-      <div class="skills-wrap fade" id="p-skills"></div>
+      <div class="slbl fade">About</div>
+      <p class="atxt fade" id="pabout"></p>
+      <div class="sktags fade" id="pskills"></div>
     </div>
   </section>
 
   <section id="experience">
     <div class="wrap">
-      <div class="sec-label fade">Experience</div>
-      <div class="exp-list fade" id="p-exp"></div>
+      <div class="slbl fade">Experience</div>
+      <div class="explist fade" id="pexp"></div>
     </div>
   </section>
 
   <section id="education">
     <div class="wrap">
-      <div class="sec-label fade">Education</div>
-      <div id="p-edu"></div>
+      <div class="slbl fade">Education</div>
+      <div id="pedu"></div>
     </div>
   </section>
 
   <section id="contact">
-    <div class="contact-inner">
-      <div class="sec-label fade">Contact</div>
-      <div class="contact-h fade">Open to new opportunities.</div>
-      <p class="contact-sub fade">Feel free to reach out for roles, collaborations, or just a conversation.</p>
-      <div class="contact-row fade" id="p-contact-links"></div>
+    <div class="cinner">
+      <div class="slbl fade">Contact</div>
+      <div class="ch fade">Open to new opportunities.</div>
+      <p class="csub fade">Feel free to reach out for roles, collaborations, or just a conversation.</p>
+      <div class="crow fade" id="pclinks"></div>
     </div>
   </section>
 
-  <footer>
-    <span id="p-footer-name"></span>
-    <span id="p-footer-loc"></span>
-  </footer>
+  <footer><span id="pfname"></span><span id="pfloc"></span></footer>
 </div>
 
-
 <script>
-// ── CONFIG ─────────────────────────────────────────────────
-const SUPABASE_URL = 'https://xvyhpffjtdzydksfyvxh.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2eWhwZmZqdGR6eWRrc2Z5dnhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NDYyNjIsImV4cCI6MjA5NTQyMjI2Mn0.P_CR0__wfCudyhljuKdyAG9kSoAuUIdrv-T20A51x6s';
-const HEADERS = { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY };
+(function() {
+  // ── CONFIG ────────────────────────────────────────────────
+  const SB_URL = 'https://xvyhpffjtdzydksfyvxh.supabase.co';
+  const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2eWhwZmZqdGR6eWRrc2Z5dnhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NDYyNjIsImV4cCI6MjA5NTQyMjI2Mn0.P_CR0__wfCudyhljuKdyAG9kSoAuUIdrv-T20A51x6s';
+  const HDR = { 'Content-Type':'application/json', 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
 
-// ── STATE ──────────────────────────────────────────────────
-let savedPassword = '';
-let profileData   = {};
-let portfolioId   = '';
-let resumeFile    = null;
+  // ── STATE ─────────────────────────────────────────────────
+  let pw = '', data = {}, pid = '', file = null, editMode = false;
 
-// ── STEPS ──────────────────────────────────────────────────
-const STEPS = [
-  { title: "Let's build your portfolio",  sub: "Fill in your details and your professional site will be ready in minutes." },
-  { title: "The basics",                  sub: "Your name, role, and location — what recruiters look for first." },
-  { title: "Your story & skills",         sub: "Let visitors know who you are beyond your job title." },
-  { title: "Your experience",             sub: "Your most recent role — you can add more by editing later." },
-  { title: "Almost done",                 sub: "Your education, and optionally upload your resume PDF." }
-];
+  const STEPS = [
+    { t:"Let's build your portfolio",  s:"Fill in your details and your professional site will be ready in minutes." },
+    { t:"The basics",                  s:"Your name, role, and location — what recruiters look for first." },
+    { t:"Your story & skills",         s:"Let visitors know who you are beyond your job title." },
+    { t:"Your experience",             s:"Your most recent role — you can add more by editing later." },
+    { t:"Almost done",                 s:"Your education, and optionally upload your resume PDF." }
+  ];
 
-// ── THEME ──────────────────────────────────────────────────
-const html = document.documentElement;
-applyTheme(localStorage.getItem('pf_theme') || 'dark');
-document.getElementById('themeToggleSetup').addEventListener('click', toggleTheme);
-document.getElementById('themeTogglePortfolio').addEventListener('click', toggleTheme);
+  // ── HELPERS ───────────────────────────────────────────────
+  function $(id) { return document.getElementById(id); }
+  function v(id) { const e = $(id); return e ? e.value.trim() : ''; }
+  function esc(s) { if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function show(id) { $(id).style.display = 'flex'; }
+  function hide(id) { $(id).style.display = 'none'; }
+  function block(id){ $(id).style.display = 'block'; }
+  function setMsg(m) { $('smsg').textContent = m; }
+  function setBar(p) { const b=$('lbar'); b.style.display='block'; b.style.width=p+'%'; }
 
-function toggleTheme() {
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  applyTheme(next);
-  localStorage.setItem('pf_theme', next);
-}
-function applyTheme(theme) {
-  html.setAttribute('data-theme', theme);
-  const dark = theme === 'dark';
-  ['setupThemeIcon','portfolioThemeIcon'].forEach(id => { const e = document.getElementById(id); if(e) e.textContent = dark ? '☀' : '☽'; });
-  ['setupThemeLabel','portfolioThemeLabel'].forEach(id => { const e = document.getElementById(id); if(e) e.textContent = dark ? 'Light' : 'Dark'; });
-}
-
-// ── FILE UPLOAD UI ─────────────────────────────────────────
-document.getElementById('resume-input').addEventListener('change', e => {
-  const f = e.target.files[0];
-  if (!f) return;
-  resumeFile = f;
-  document.getElementById('file-name').textContent = f.name;
-  document.getElementById('file-chosen').style.display = 'block';
-});
-const dropZone = document.getElementById('file-drop');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('dragover');
-  const f = e.dataTransfer.files[0];
-  if (f && f.type === 'application/pdf') {
-    resumeFile = f;
-    document.getElementById('file-name').textContent = f.name;
-    document.getElementById('file-chosen').style.display = 'block';
+  function genId(n=8) {
+    const c='abcdefghijklmnopqrstuvwxyz0123456789';
+    return Array.from(crypto.getRandomValues(new Uint8Array(n))).map(b=>c[b%c.length]).join('');
   }
-});
-
-// ── STEP NAV ───────────────────────────────────────────────
-function setDot(i, state) {
-  const el = document.getElementById('dot-' + i);
-  el.classList.remove('active','done');
-  if (state) el.classList.add(state);
-}
-function nextStep(current) {
-  if (current === 0) {
-    const pw1 = document.getElementById('pw1').value.trim();
-    const pw2 = document.getElementById('pw2').value.trim();
-    const err = document.getElementById('pw-err');
-    if (!pw1) return;
-    if (pw1 !== pw2) { err.style.display = 'block'; return; }
-    err.style.display = 'none';
-    savedPassword = pw1;
-  }
-  document.getElementById('step-' + current).classList.add('hidden');
-  setDot(current, 'done');
-  const next = current + 1;
-  document.getElementById('step-' + next).classList.remove('hidden');
-  setDot(next, 'active');
-  document.getElementById('setup-title').textContent = STEPS[next].title;
-  document.getElementById('setup-sub').textContent   = STEPS[next].sub;
-}
-function prevStep(current) {
-  document.getElementById('step-' + current).classList.add('hidden');
-  setDot(current, '');
-  const prev = current - 1;
-  document.getElementById('step-' + prev).classList.remove('hidden');
-  setDot(prev, 'active');
-  document.getElementById('setup-title').textContent = STEPS[prev].title;
-  document.getElementById('setup-sub').textContent   = STEPS[prev].sub;
-}
-
-// ── HELPERS ────────────────────────────────────────────────
-function genId(len = 8) {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  return Array.from(crypto.getRandomValues(new Uint8Array(len)))
-    .map(b => chars[b % chars.length]).join('');
-}
-async function hashPassword(pw) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-function setStatus(msg) { document.getElementById('status-msg').textContent = msg; }
-function setLoading(pct) {
-  const bar = document.getElementById('loading-bar');
-  bar.style.display = 'block';
-  bar.style.width = pct + '%';
-}
-function val(id) { const e = document.getElementById(id); return e ? e.value.trim() : ''; }
-function esc(s) {
-  if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── BUILD / SAVE ────────────────────────────────────────────
-async function buildPortfolio() {
-  const btn = document.getElementById('build-btn');
-  btn.disabled = true;
-
-  const isEdit = !!window._editMode;
-  setStatus(isEdit ? 'Saving changes…' : 'Saving your portfolio…');
-  setLoading(20);
-
-  const newData = {
-    name: val('f-name'), title: val('f-title'), location: val('f-location'),
-    bio: val('f-bio'), about: val('f-about'), skills: val('f-skills'),
-    linkedin: val('f-linkedin'), github: val('f-github'), email: val('f-email'),
-    role: val('f-role'), company: val('f-company'), dates: val('f-dates'),
-    exploc: val('f-exploc'), expdesc: val('f-expdesc'),
-    degree: val('f-degree'), school: val('f-school'),
-    eduyears: val('f-eduyears'), edumeta: val('f-edumeta'),
-    resume_url: isEdit ? (profileData.resume_url || '') : ''
-  };
-
-  if (!isEdit) {
-    portfolioId = genId();
+  async function hashPw(p) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   }
 
-  // Upload resume if provided
-  if (resumeFile) {
-    setStatus('Uploading resume…');
-    setLoading(40);
-    try {
-      const path = `${portfolioId}/resume.pdf`;
-      const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${path}`, {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/pdf' },
-        body: resumeFile
-      });
-      if (uploadRes.ok) {
-        newData.resume_url = `${SUPABASE_URL}/storage/v1/object/public/resumes/${path}`;
-      }
-    } catch(e) { console.warn('Resume upload failed:', e); }
-  }
-
-  setLoading(70);
-  setStatus(isEdit ? 'Updating…' : 'Saving to database…');
-
-  try {
-    if (isEdit) {
-      // PATCH existing row
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios?id=eq.${portfolioId}`, {
-        method: 'PATCH',
-        headers: { ...HEADERS, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ data: newData, resume_url: newData.resume_url, updated_at: new Date().toISOString() })
-      });
-      if (!res.ok) throw new Error(await res.text());
-    } else {
-      // POST new row
-      const pwHash = await hashPassword(savedPassword);
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios`, {
-        method: 'POST',
-        headers: { ...HEADERS, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ id: portfolioId, password_hash: pwHash, data: newData, resume_url: newData.resume_url })
-      });
-      if (!res.ok) throw new Error(await res.text());
-    }
-  } catch(e) {
-    setStatus('Something went wrong: ' + e.message);
-    setLoading(0);
-    btn.disabled = false;
-    console.error(e);
-    return;
-  }
-
-  profileData = newData;
-  setLoading(100);
-  setStatus('');
-  btn.disabled = false;
-
-  if (isEdit) {
-    window._editMode = false;
-    btn.textContent = 'Build portfolio →';
-    renderPortfolio(profileData);
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('portfolio-screen').style.display = 'block';
-    initFades();
-    window.scrollTo({ top: 0 });
-  } else {
-    // Show share screen
-    const url = `${location.origin}${location.pathname}?p=${portfolioId}`;
-    document.getElementById('share-url').textContent = url;
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('share-screen').style.display = 'flex';
-    window.scrollTo({ top: 0 });
-  }
-}
-
-// ── RENDER ─────────────────────────────────────────────────
-function renderPortfolio(d) {
-  const name = d.name || 'Portfolio';
-  document.title = name + ' — Portfolio';
-  document.getElementById('nav-name').textContent = (d.name || 'portfolio').toLowerCase().split(' ')[0];
-  document.getElementById('p-eyebrow').textContent = [d.title, d.location].filter(Boolean).join(' · ');
-  document.getElementById('p-name').textContent    = d.name || '';
-  document.getElementById('p-bio').textContent     = d.bio  || '';
-
-  // Hero links
-  const heroLinks = document.getElementById('p-hero-links');
-  heroLinks.innerHTML = '<a href="#contact" class="pill pill-solid">Get in touch</a>';
-  if (d.resume_url) heroLinks.innerHTML += `<a href="${esc(d.resume_url)}" target="_blank" class="pill pill-ghost">Download CV</a>`;
-  if (d.linkedin)   heroLinks.innerHTML += `<a href="${esc(d.linkedin.startsWith('http') ? d.linkedin : 'https://'+d.linkedin)}" target="_blank" class="pill pill-ghost">LinkedIn</a>`;
-  if (d.github)     heroLinks.innerHTML += `<a href="${esc(d.github.startsWith('http') ? d.github : 'https://'+d.github)}" target="_blank" class="pill pill-ghost">GitHub</a>`;
-  if (d.email)      heroLinks.innerHTML += `<a href="mailto:${esc(d.email)}" class="pill pill-ghost">Email</a>`;
-
-  // About
-  document.getElementById('p-about').textContent = d.about || '';
-  const skillsEl = document.getElementById('p-skills');
-  skillsEl.innerHTML = '';
-  if (d.skills) d.skills.split(',').forEach(s => {
-    const t = document.createElement('span');
-    t.className = 'sk-tag'; t.textContent = s.trim();
-    skillsEl.appendChild(t);
-  });
-
-  // Experience
-  const expEl = document.getElementById('p-exp');
-  expEl.innerHTML = (d.role || d.company) ? `
-    <div class="exp-item">
-      <div>
-        <div class="exp-period">${esc(d.dates)}</div>
-        <div class="exp-co">${esc(d.company)}${d.exploc ? ' · ' + esc(d.exploc) : ''}</div>
-      </div>
-      <div>
-        <div class="exp-role">${esc(d.role)}</div>
-        <div class="exp-desc">${esc(d.expdesc)}</div>
-      </div>
-    </div>` : '<p style="font-size:.85rem;color:var(--muted)">No experience added yet.</p>';
-
-  // Education
-  const eduEl = document.getElementById('p-edu');
-  eduEl.innerHTML = (d.degree || d.school) ? `
-    <div class="edu-item">
-      <div class="edu-period">${esc(d.eduyears)}</div>
-      <div>
-        <div class="edu-deg">${esc(d.degree)}</div>
-        <div class="edu-school">${esc(d.school)}</div>
-        <div class="edu-meta">${esc(d.edumeta)}</div>
-      </div>
-    </div>` : '';
-
-  // Contact
-  const cLinks = document.getElementById('p-contact-links');
-  cLinks.innerHTML = '';
-  if (d.email)    cLinks.innerHTML += `<a href="mailto:${esc(d.email)}" class="pill pill-solid">${esc(d.email)}</a>`;
-  if (d.linkedin) cLinks.innerHTML += `<a href="${esc(d.linkedin.startsWith('http') ? d.linkedin : 'https://'+d.linkedin)}" target="_blank" class="pill pill-ghost">LinkedIn</a>`;
-  if (d.github)   cLinks.innerHTML += `<a href="${esc(d.github.startsWith('http') ? d.github : 'https://'+d.github)}" target="_blank" class="pill pill-ghost">GitHub</a>`;
-  if (d.resume_url) cLinks.innerHTML += `<a href="${esc(d.resume_url)}" target="_blank" class="pill pill-ghost">Download CV</a>`;
-
-  document.getElementById('p-footer-name').textContent = name;
-  document.getElementById('p-footer-loc').textContent  = d.location || '';
-}
-
-// ── VIEW PORTFOLIO ─────────────────────────────────────────
-function viewPortfolio() {
-  renderPortfolio(profileData);
-  document.getElementById('share-screen').style.display = 'none';
-  document.getElementById('portfolio-screen').style.display = 'block';
-  window.scrollTo({ top: 0 });
-  initFades();
-}
-
-function initFades() {
-  setTimeout(() => {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('in'), (i % 5) * 70);
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.fade').forEach(el => { el.classList.remove('in'); io.observe(el); });
-  }, 50);
-}
-
-// ── SHARE ──────────────────────────────────────────────────
-function copyLink() {
-  const url = document.getElementById('share-url').textContent;
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
-  });
-}
-
-// ── MODAL ──────────────────────────────────────────────────
-function openModal()  { document.getElementById('pw-modal').classList.add('open'); setTimeout(() => document.getElementById('edit-pw').focus(), 50); }
-function closeModal() { document.getElementById('pw-modal').classList.remove('open'); document.getElementById('edit-pw').value = ''; document.getElementById('pw-modal-err').style.display = 'none'; }
-
-async function checkPassword() {
-  const entered = document.getElementById('edit-pw').value;
-  const hash    = await hashPassword(entered);
-  // Fetch from Supabase to verify
-  try {
-    const res  = await fetch(`${SUPABASE_URL}/rest/v1/portfolios?id=eq.${portfolioId}&select=password_hash`, { headers: HEADERS });
-    const rows = await res.json();
-    if (rows.length && rows[0].password_hash === hash) {
-      closeModal();
-      // Repopulate form fields
-      const d = profileData;
-      const map = { 'f-name':d.name,'f-title':d.title,'f-location':d.location,'f-bio':d.bio,'f-about':d.about,'f-skills':d.skills,'f-linkedin':d.linkedin,'f-github':d.github,'f-email':d.email,'f-role':d.role,'f-company':d.company,'f-dates':d.dates,'f-exploc':d.exploc,'f-expdesc':d.expdesc,'f-degree':d.degree,'f-school':d.school,'f-eduyears':d.eduyears,'f-edumeta':d.edumeta };
-      Object.entries(map).forEach(([id, v]) => { const el = document.getElementById(id); if(el) el.value = v || ''; });
-      // Reset dots & jump to step 1
-      for (let i = 0; i < 5; i++) setDot(i, i === 0 ? 'done' : '');
-      ['step-0','step-1','step-2','step-3','step-4'].forEach(id => document.getElementById(id).classList.add('hidden'));
-      document.getElementById('step-1').classList.remove('hidden');
-      setDot(1, 'active');
-      document.getElementById('setup-title').textContent = STEPS[1].title;
-      document.getElementById('setup-sub').textContent   = STEPS[1].sub;
-      // Override buildPortfolio to UPDATE instead of INSERT
-      window._editMode = true;
-      document.getElementById('portfolio-screen').style.display = 'none';
-      document.getElementById('setup-screen').style.display = 'flex';
-      // Change build btn label
-      document.getElementById('build-btn').textContent = 'Save changes →';
-      window.scrollTo({ top: 0 });
-    } else {
-      document.getElementById('pw-modal-err').style.display = 'block';
-    }
-  } catch(e) {
-    document.getElementById('pw-modal-err').style.display = 'block';
-  }
-}
-
-// Override buildPortfolio for edit mode (PATCH instead of POST)
-const _originalBuild = buildPortfolio;
-async function buildPortfolio() {
-  if (!window._editMode) { await _originalBuild(); return; }
-
-  const btn = document.getElementById('build-btn');
-  btn.disabled = true;
-  setStatus('Saving changes…');
-  setLoading(30);
-
-  const newData = {
-    name: val('f-name'), title: val('f-title'), location: val('f-location'),
-    bio: val('f-bio'), about: val('f-about'), skills: val('f-skills'),
-    linkedin: val('f-linkedin'), github: val('f-github'), email: val('f-email'),
-    role: val('f-role'), company: val('f-company'), dates: val('f-dates'),
-    exploc: val('f-exploc'), expdesc: val('f-expdesc'),
-    degree: val('f-degree'), school: val('f-school'),
-    eduyears: val('f-eduyears'), edumeta: val('f-edumeta'),
-    resume_url: profileData.resume_url || ''
-  };
-
-  // Upload new resume if provided
-  if (resumeFile) {
-    setStatus('Uploading new resume…');
-    setLoading(50);
-    try {
-      const path = `${portfolioId}/resume.pdf`;
-      await fetch(`${SUPABASE_URL}/storage/v1/object/resumes/${path}`, {
-        method: 'POST',
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/pdf' },
-        body: resumeFile
-      });
-      newData.resume_url = `${SUPABASE_URL}/storage/v1/object/public/resumes/${path}`;
-    } catch(e) { console.warn('Resume upload failed:', e); }
-  }
-
-  setLoading(75);
-  setStatus('Updating…');
-
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/portfolios?id=eq.${portfolioId}`, {
-      method: 'PATCH',
-      headers: { ...HEADERS, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ data: newData, resume_url: newData.resume_url, updated_at: new Date().toISOString() })
+  // ── THEME ─────────────────────────────────────────────────
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    const d = t==='dark';
+    const pairs = [['tIconSetup','tLblSetup'],['tIconPort','tLblPort']];
+    pairs.forEach(([ic,lb]) => {
+      const ie=$( ic), le=$(lb);
+      if(ie) ie.textContent = d?'☀':'☽';
+      if(le) le.textContent = d?'Light':'Dark';
     });
-    if (!res.ok) throw new Error(await res.text());
-  } catch(e) {
-    setStatus('Something went wrong. Please try again.');
-    btn.disabled = false;
-    setLoading(0);
-    return;
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const nxt = cur==='dark'?'light':'dark';
+    applyTheme(nxt);
+    localStorage.setItem('pf_theme', nxt);
+  }
+  applyTheme(localStorage.getItem('pf_theme')||'dark');
+  $('tTogSetup').addEventListener('click', toggleTheme);
+  $('tTogPortfolio').addEventListener('click', toggleTheme);
+
+  // ── FILE DROP ─────────────────────────────────────────────
+  $('fdrop').addEventListener('click', () => $('fresume').click());
+  $('fdrop').addEventListener('dragover', e => { e.preventDefault(); $('fdrop').classList.add('over'); });
+  $('fdrop').addEventListener('dragleave', () => $('fdrop').classList.remove('over'));
+  $('fdrop').addEventListener('drop', e => {
+    e.preventDefault(); $('fdrop').classList.remove('over');
+    const f = e.dataTransfer.files[0];
+    if (f && f.type==='application/pdf') { file=f; $('fname').textContent=f.name; $('fchosen').style.display='block'; }
+  });
+  $('fresume').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) { file=f; $('fname').textContent=f.name; $('fchosen').style.display='block'; }
+  });
+
+  // ── STEPS ─────────────────────────────────────────────────
+  function setDot(i, state) {
+    const el = $('d'+i);
+    el.classList.remove('active','done');
+    if(state) el.classList.add(state);
+  }
+  function goStep(from, to) {
+    $('s'+from).classList.add('hidden');
+    setDot(from, to>from ? 'done' : '');
+    $('s'+to).classList.remove('hidden');
+    setDot(to, 'active');
+    $('stitle').textContent = STEPS[to].t;
+    $('ssub').textContent   = STEPS[to].s;
   }
 
-  profileData = newData;
-  setLoading(100);
-  window._editMode = false;
-  btn.textContent = 'Build portfolio →';
-  btn.disabled = false;
-  setStatus('');
-  renderPortfolio(profileData);
-  document.getElementById('setup-screen').style.display = 'none';
-  document.getElementById('portfolio-screen').style.display = 'block';
-  initFades();
-  window.scrollTo({ top: 0 });
-}
+  $('ns0').addEventListener('click', () => {
+    const p1=v('pw1'), p2=v('pw2'), err=$('pwerr');
+    if(!p1) return;
+    if(p1!==p2) { err.style.display='block'; return; }
+    err.style.display='none'; pw=p1; goStep(0,1);
+  });
+  $('ps1').addEventListener('click', () => goStep(1,0));
+  $('ns1').addEventListener('click', () => goStep(1,2));
+  $('ps2').addEventListener('click', () => goStep(2,1));
+  $('ns2').addEventListener('click', () => goStep(2,3));
+  $('ps3').addEventListener('click', () => goStep(3,2));
+  $('ns3').addEventListener('click', () => goStep(3,4));
+  $('ps4').addEventListener('click', () => goStep(4,3));
 
-document.getElementById('edit-pw').addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+  // ── BUILD / SAVE ──────────────────────────────────────────
+  $('buildbtn').addEventListener('click', async () => {
+    const btn = $('buildbtn');
+    btn.disabled = true;
+    setMsg(editMode ? 'Saving changes…' : 'Saving your portfolio…');
+    setBar(20);
 
-// ── LOAD FROM URL ?p=id ────────────────────────────────────
-(async function init() {
-  const params = new URLSearchParams(location.search);
-  const pid    = params.get('p');
-  if (!pid) return; // show setup screen normally
+    const d = {
+      name:v('fn'), title:v('ft'), location:v('fl'), bio:v('fb'),
+      about:v('fab'), skills:v('fsk'), linkedin:v('fli'), github:v('fgh'), email:v('fem'),
+      role:v('fro'), company:v('fco'), dates:v('fda'), exploc:v('flo'), expdesc:v('fde'),
+      degree:v('fdg'), school:v('fsc'), eduyears:v('fey'), edumeta:v('fem2'),
+      resume_url: editMode ? (data.resume_url||'') : ''
+    };
 
-  // Load from Supabase
-  try {
-    const res  = await fetch(`${SUPABASE_URL}/rest/v1/portfolios?id=eq.${pid}&select=id,data,resume_url`, { headers: HEADERS });
-    const rows = await res.json();
-    if (!rows.length) {
-      document.getElementById('setup-screen').querySelector('.setup-sub').textContent = 'Portfolio not found. Create a new one below.';
+    if (!editMode) pid = genId();
+
+    // Upload resume
+    if (file) {
+      setMsg('Uploading resume…'); setBar(40);
+      try {
+        const path = pid+'/resume.pdf';
+        const r = await fetch(SB_URL+'/storage/v1/object/resumes/'+path, {
+          method:'POST',
+          headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer '+SB_KEY, 'Content-Type':'application/pdf' },
+          body: file
+        });
+        if(r.ok) d.resume_url = SB_URL+'/storage/v1/object/public/resumes/'+path;
+      } catch(e) { console.warn('Upload failed',e); }
+    }
+
+    setBar(70); setMsg(editMode ? 'Updating…' : 'Saving to database…');
+
+    try {
+      let res;
+      if (editMode) {
+        res = await fetch(SB_URL+'/rest/v1/portfolios?id=eq.'+pid, {
+          method:'PATCH',
+          headers:{ ...HDR, 'Prefer':'return=minimal' },
+          body: JSON.stringify({ data:d, resume_url:d.resume_url, updated_at:new Date().toISOString() })
+        });
+      } else {
+        const hash = await hashPw(pw);
+        res = await fetch(SB_URL+'/rest/v1/portfolios', {
+          method:'POST',
+          headers:{ ...HDR, 'Prefer':'return=minimal' },
+          body: JSON.stringify({ id:pid, password_hash:hash, data:d, resume_url:d.resume_url })
+        });
+      }
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt);
+      }
+    } catch(e) {
+      setMsg('Error: '+e.message);
+      setBar(0); btn.disabled=false;
       return;
     }
-    portfolioId = pid;
-    profileData = { ...rows[0].data, resume_url: rows[0].resume_url || '' };
-    renderPortfolio(profileData);
-    document.getElementById('setup-screen').style.display = 'none';
-    document.getElementById('portfolio-screen').style.display = 'block';
-    initFades();
-  } catch(e) {
-    console.error('Failed to load portfolio:', e);
+
+    data = d; setBar(100); setMsg(''); btn.disabled=false;
+
+    if (editMode) {
+      editMode=false;
+      btn.textContent='Build portfolio →';
+      renderPortfolio(data);
+      hide('setup-screen');
+      $('portfolio-screen').style.display='block';
+      initFades(); window.scrollTo({top:0});
+    } else {
+      const url = location.origin+location.pathname+'?p='+pid;
+      $('shareurl').textContent = url;
+      hide('setup-screen'); show('share-screen');
+      window.scrollTo({top:0});
+    }
+  });
+
+  // ── SHARE ─────────────────────────────────────────────────
+  $('cpybtn').addEventListener('click', () => {
+    navigator.clipboard.writeText($('shareurl').textContent).then(() => {
+      $('cpybtn').textContent='Copied!';
+      setTimeout(()=>$('cpybtn').textContent='Copy', 2000);
+    });
+  });
+  $('viewbtn').addEventListener('click', () => {
+    renderPortfolio(data);
+    hide('share-screen'); block('portfolio-screen');
+    initFades(); window.scrollTo({top:0});
+  });
+
+  // ── MODAL ─────────────────────────────────────────────────
+  $('editbtn').addEventListener('click', () => { $('pwmodal').classList.add('open'); setTimeout(()=>$('editpw').focus(),50); });
+  $('cancelModal').addEventListener('click', () => { $('pwmodal').classList.remove('open'); $('editpw').value=''; $('pmerr').style.display='none'; });
+  $('confirmModal').addEventListener('click', confirmEdit);
+  $('editpw').addEventListener('keydown', e => { if(e.key==='Enter') confirmEdit(); });
+
+  async function confirmEdit() {
+    const entered = $('editpw').value;
+    const hash    = await hashPw(entered);
+    try {
+      const res  = await fetch(SB_URL+'/rest/v1/portfolios?id=eq.'+pid+'&select=password_hash', {headers:HDR});
+      const rows = await res.json();
+      if (rows.length && rows[0].password_hash===hash) {
+        $('pwmodal').classList.remove('open');
+        $('editpw').value=''; $('pmerr').style.display='none';
+        // Repopulate
+        const d=data;
+        const map={'fn':d.name,'ft':d.title,'fl':d.location,'fb':d.bio,'fab':d.about,'fsk':d.skills,'fli':d.linkedin,'fgh':d.github,'fem':d.email,'fro':d.role,'fco':d.company,'fda':d.dates,'flo':d.exploc,'fde':d.expdesc,'fdg':d.degree,'fsc':d.school,'fey':d.eduyears,'fem2':d.edumeta};
+        Object.entries(map).forEach(([id,val])=>{ const e=$(id); if(e) e.value=val||''; });
+        // Reset to step 1
+        for(let i=0;i<5;i++) setDot(i,i===0?'done':'');
+        for(let i=0;i<5;i++) $('s'+i).classList.add('hidden');
+        $('s1').classList.remove('hidden'); setDot(1,'active');
+        $('stitle').textContent=STEPS[1].t; $('ssub').textContent=STEPS[1].s;
+        editMode=true;
+        $('buildbtn').textContent='Save changes →';
+        hide('portfolio-screen');
+        $('setup-screen').style.display='flex';
+        window.scrollTo({top:0});
+      } else {
+        $('pmerr').style.display='block';
+      }
+    } catch(e) { $('pmerr').style.display='block'; }
   }
+
+  // ── RENDER ────────────────────────────────────────────────
+  function renderPortfolio(d) {
+    const name = d.name||'Portfolio';
+    document.title = name+' — Portfolio';
+    $('pnav').textContent = (d.name||'portfolio').toLowerCase().split(' ')[0];
+    $('peyebrow').textContent = [d.title,d.location].filter(Boolean).join(' · ');
+    $('pname').textContent = d.name||'';
+    $('pbio').textContent  = d.bio||'';
+
+    // Hero links
+    let hl = '<a href="#contact" class="pill ps">Get in touch</a>';
+    if(d.resume_url) hl += `<a href="${esc(d.resume_url)}" target="_blank" class="pill pg">Download CV</a>`;
+    if(d.linkedin)   hl += `<a href="${esc(d.linkedin.startsWith('http')?d.linkedin:'https://'+d.linkedin)}" target="_blank" class="pill pg">LinkedIn</a>`;
+    if(d.github)     hl += `<a href="${esc(d.github.startsWith('http')?d.github:'https://'+d.github)}" target="_blank" class="pill pg">GitHub</a>`;
+    if(d.email)      hl += `<a href="mailto:${esc(d.email)}" class="pill pg">Email</a>`;
+    $('phlinks').innerHTML = hl;
+
+    $('pabout').textContent = d.about||'';
+    const sk=$('pskills'); sk.innerHTML='';
+    if(d.skills) d.skills.split(',').forEach(s=>{ const t=document.createElement('span'); t.className='skt'; t.textContent=s.trim(); sk.appendChild(t); });
+
+    $('pexp').innerHTML = (d.role||d.company) ? `<div class="expitem"><div><div class="epper">${esc(d.dates)}</div><div class="epco">${esc(d.company)}${d.exploc?' · '+esc(d.exploc):''}</div></div><div><div class="eprole">${esc(d.role)}</div><div class="epdesc">${esc(d.expdesc)}</div></div></div>` : '<p style="font-size:.85rem;color:var(--muted)">No experience added yet.</p>';
+
+    $('pedu').innerHTML = (d.degree||d.school) ? `<div class="eduitem"><div class="eduyrs">${esc(d.eduyears)}</div><div><div class="edudeg">${esc(d.degree)}</div><div class="edusch">${esc(d.school)}</div><div class="edumeta">${esc(d.edumeta)}</div></div></div>` : '';
+
+    let cl='';
+    if(d.email)      cl+=`<a href="mailto:${esc(d.email)}" class="pill ps">${esc(d.email)}</a>`;
+    if(d.linkedin)   cl+=`<a href="${esc(d.linkedin.startsWith('http')?d.linkedin:'https://'+d.linkedin)}" target="_blank" class="pill pg">LinkedIn</a>`;
+    if(d.github)     cl+=`<a href="${esc(d.github.startsWith('http')?d.github:'https://'+d.github)}" target="_blank" class="pill pg">GitHub</a>`;
+    if(d.resume_url) cl+=`<a href="${esc(d.resume_url)}" target="_blank" class="pill pg">Download CV</a>`;
+    $('pclinks').innerHTML = cl;
+
+    $('pfname').textContent = name;
+    $('pfloc').textContent  = d.location||'';
+  }
+
+  function initFades() {
+    setTimeout(()=>{
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('in'),(i%5)*70); io.unobserve(e.target); } });
+      },{threshold:0.07});
+      document.querySelectorAll('.fade').forEach(el=>{ el.classList.remove('in'); io.observe(el); });
+    },50);
+  }
+
+  // ── LOAD FROM ?p=id ───────────────────────────────────────
+  (async function init() {
+    const p = new URLSearchParams(location.search).get('p');
+    if (!p) return;
+    try {
+      const res  = await fetch(SB_URL+'/rest/v1/portfolios?id=eq.'+p+'&select=id,data,resume_url',{headers:HDR});
+      const rows = await res.json();
+      if (!rows.length) { $('ssub').textContent='Portfolio not found. Create a new one below.'; return; }
+      pid  = p;
+      data = { ...rows[0].data, resume_url: rows[0].resume_url||'' };
+      renderPortfolio(data);
+      hide('setup-screen'); block('portfolio-screen');
+      initFades();
+    } catch(e) { console.error('Load failed:',e); }
+  })();
+
 })();
 </script>
 </body>
